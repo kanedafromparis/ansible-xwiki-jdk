@@ -4,8 +4,6 @@
     - java
     - java-webupd8
   become: true
-  # apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 2EA8F35793D8809A
-  # apt_key: data="{{ lookup('file', 'webupd8.key.asc') }}" state=present
   apt_key: keyserver=keyserver.ubuntu.com id=EEA14886 state=present
   # Use a static file because right now using just an ID fails
 

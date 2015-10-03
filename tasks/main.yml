@@ -66,5 +66,10 @@
 - include: oracle.yml
   when: java_versions is defined and java_versions is sequence and java_versions|join|search("oracle")
 
+- include: oracle-tar-gz.yml
+  when: java_from_targz is defined 
+  when: java_from_targz_jdk_version is defined 
+  when: java_from_targz_jdk_build is defined 
+
 - include: openjdk.yml
   when: java_versions is defined and java_versions is sequence and java_versions|join|search("openjdk")

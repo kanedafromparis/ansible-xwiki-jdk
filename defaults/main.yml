@@ -80,3 +80,15 @@ util_package_list_custom: []
 util_apt_cache_valid_time: 3600
 
 java_folder: "/usr/lib/jvm"
+
+java_folder: /usr/lib/jvm
+java_alias: java-7-oracle
+#java_from_targz_tmp: $HOME/.ansible/tmp
+
+# Those value overide the site.xml value so I comment them
+java_from_targz: False
+java_from_targz_jdk_version: 7u60
+java_from_targz_jdk_build: b19
+java_from_targz_jdk_name: jdk1.7.0_60
+java_from_targz_package: jdk-{{ java_from_targz_jdk_version }}-linux-{{ ansible_architecture }}.tar.gz
+java_from_targz_tmp: /var/tmp

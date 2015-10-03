@@ -1,0 +1,26 @@
+---
+# this allow to install a specific targeted version
+
+- name: Download the tar-gz file (Telecharger le tar gz)
+  tags: java
+  become: true
+  # element to turn into parama are : 7u60 (jdk version), b19 (build version), x64 (arch)
+  # @Todo fine a way to get a better bandwith (Le debit est tres mauvais)
+  # @Todo use a cache server (maybe local)
+  shell: 'wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/{{java_from_targz_jdk_version}}-{{ java_from_targz_jdk_build }}/{{ java_from_targz_package }} -o {{ java_from_targz_tmp }}/{{ java_from_targz_package }}'
+  #get_url: url=http://download.oracle.com/otn-pub/java/jdk/{{java_from_targz_jdk_version}}-{{ java_from_targz_jdk_build }}/{{ java_from_targz_package }} dest={{ java_from_targz_tmp }}/{{ java_from_targz_package }} validate_certs=no headers='oraclelicense:accept-securebackup-cookie'
+  # get_url does not work properly
+  # next might be - unarchive: src=https://example.com/example.zip dest=/usr/local/bin copy=no 
+  changed_when: false
+
+- name: Extract Java archive
+  become: true
+  unarchive: src={{ java_from_targz_tmp }}/{{ java_from_targz_package }} dest={{ java_folder }} creates=yes copy=no owner=root group=root
+
+- name: Create symlink for easier update
+  become: true
+  file: "state=link src={{java_folder}}/{{java_name}} dest={{java_folder}}/{{java_alias}}"
+
+- name: Make Java available for system
+  become: true
+  command: 'update-alternatives --install "/usr/bin/java" "java" "{{java_folder}}/{{java_alias}}/bin/java" 1'
