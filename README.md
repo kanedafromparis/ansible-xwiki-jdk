@@ -19,9 +19,15 @@ jdk.version : open-jdk1.7
 jdk.links : /usr/local/java
 jdk.dir : /usr/local/java 
 
-/usr/lib/jvm/java-7-openjdk-amd64/
-
 ### vars/main.yml
+    java_folder: "/usr/lib/jvm"
+		java_version: package to install possible values : 
+		 - "openjdk-7-jdk"
+		 - "oracle-java8-installer"
+		java_alias_default: folder of installation, possible values :
+		 - "java-7-openjdk-amd64"
+		 - "java-8-oracle"
+
 
 NTR (nothing to report)
 

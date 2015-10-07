@@ -1,3 +1,5 @@
 ---
 util_init_system_default: sysvinit
 util_registered_selinux_state.rc: 0
+java_folder_default: "/usr/lib/jvm"
+java_alias_default: "openjdk-7-jdk"

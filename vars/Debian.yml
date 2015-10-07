@@ -12,5 +12,3 @@ util_package_list_ansible_deps:
 #  - python-httplib2
 
 util_init_system_default: systemd
-java_folder_default: "/usr/lib/jvm"
-java_alias_default: "java-7-openjdk"

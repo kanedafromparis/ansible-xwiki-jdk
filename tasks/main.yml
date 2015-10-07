@@ -65,5 +65,8 @@
   setup:
     filter: ansible_local
 
-- include: mysql-rep.yml
-  when: xwiki_mysql_versions is defined
+- include: oracle.yml
+  when: java_alias is defined and java_alias is sequence and java_alias|join|search("oracle")
+
+- include: openjdk.yml
+  when: java_alias is defined and java_alias is sequence and java_alias|join|search("openjdk")
