@@ -1,0 +1,16 @@
+{ "__comment": "I am not certain this is necessary",
+  "general": {
+    "role_version": "{{ util_role_version }}",
+    "template_use_cow": "{{ util_template_use_cow }}",
+    "package_state": "{{ util_package_state }}",
+    "persistent_data_path": "{{ util_persistent_data_path_remote }}"
+  },
+  "init": {
+    "system": "{{ util_init_system|default(util_init_system_default) }}"
+  },
+  "modules": {
+    "apt": {
+      "cache_valid_time": "{{ util_apt_cache_valid_time }}"
+    },
+  }
+}

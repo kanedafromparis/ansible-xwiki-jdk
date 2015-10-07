@@ -1,0 +1,70 @@
+---
+# tasks file for jdk
+- name: Assert supported platform (Verification que la plateform fait partie des plateformes supporter)
+  tags: util
+  assert:
+    that:
+      - ansible_os_family in util_supported_os_families
+      - ansible_distribution in util_supported_os_distributions
+
+
+- name: Include OS specific vars (Ajout des variables specifique a la famille de system d exploitation)
+  tags: util
+  include_vars: "{{ ansible_os_family }}.yml"
+
+#- name: Include distribution specific vars (Ajout des variables specifique a la distribution)
+#  tags: util
+#  with_first_found:
+#    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+#    - "{{ ansible_distribution }}.yml"
+#  include_vars: "{{ item }}"
+
+
+- name: Assert role configuration (Verification de l etat du systeme de depart)
+  tags: util
+  assert:
+    that:
+      - util_package_state in util_package_states
+      - util_init_system|default(util_init_system_default) in util_init_systems
+        
+- name: Install Ansible module dependencies (Installation des dependances modules) 
+  tags: util
+  become: true
+  with_flattened:
+    - util_package_list_ansible_deps
+    - util_package_list_custom
+  action: "{{ ansible_pkg_mgr }} state={{ util_package_state }} name={{ item }}"
+
+# Add some facts for other roles to use
+- name: Install Ansible facts.d directory
+  tags: util
+  become: yes
+  file:
+    state: directory
+    dest: /etc/ansible/facts.d
+    owner: 0
+    group: 0
+    mode: 0755
+
+- name: Install local util facts
+  tags: util
+  become: yes
+  register: util_registered_install_local_util_facts
+  template:
+    src: facts.j2
+    dest: /etc/ansible/facts.d/util.fact
+    owner: 0
+    group: 0
+    mode: 0644
+
+- name: Re-read local facts
+  tags: util
+  when: "{{ util_registered_install_local_util_facts.changed|default(false) }}"
+  setup:
+    filter: ansible_local
+
+- include: oracle.yml
+  when: java_versions is defined and java_versions is sequence and java_versions|join|search("oracle")
+
+- include: openjdk.yml
+  when: java_versions is defined and java_versions is sequence and java_versions|join|search("openjdk")

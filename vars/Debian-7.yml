@@ -1,0 +1,3 @@
+---
+util_init_system_default: sysvinit
+util_registered_selinux_state.rc: 0

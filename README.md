@@ -2,7 +2,6 @@ Role Name
 =========
 
 This is a role in order to install the targeted jdk version
-This is one role of the roles used in order to install xwiki on a sever via ansible.
 
 Requirements
 ------------
@@ -24,7 +23,7 @@ jdk.dir : /usr/local/java
 
 ### vars/main.yml
 
-Todo
+NTR (nothing to report)
 
 Dependencies
 ------------
@@ -32,27 +31,20 @@ Dependencies
 Example Playbook
 ----------------
 
-@Todo check and confirme those examples
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
     - hosts: servers 
       vars:
-        java_versions: oracle-jdk7-installer
-        java_from_targz: true
-        java_from_targz_jdk_version: 7u80
-        java_from_targz_jdk_build: b15
-        java_from_targz_jdk_name: jdk1.7.0_7u80
-        java_from_targz_package: jdk-{{ java_from_targz_jdk_version }}-linux-x64.tar.gz
-        java_from_targz_tmp: /var/tmp
-      roles:
+        java_versions: oracle-jdk7-installer  			
+      roles:      
       - {role: ansible-xwiki-jdk}
       
 
 License
 -------
 
-GPLv3
+BSD
 
 Author Information
 ------------------
-C. Sabourdin
+C. Sabourdin inspire by Git-hub
