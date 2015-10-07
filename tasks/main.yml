@@ -12,21 +12,10 @@
   tags: util
   include_vars: "{{ ansible_os_family }}.yml"
 
-#- name: Include distribution specific vars (Ajout des variables specifique a la distribution)
-#  tags: util
-#  with_first_found:
-#    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
-#    - "{{ ansible_distribution }}.yml"
-#  include_vars: "{{ item }}"
-
-
-- name: Assert role configuration (Verification de l etat du systeme de depart)
+- name: Include OS specific vars (Ajout des variables specifique a la distribution)
   tags: util
-  assert:
-    that:
-      - util_package_state in util_package_states
-      - util_init_system|default(util_init_system_default) in util_init_systems
-        
+  include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+
 - name: Install Ansible module dependencies (Installation des dependances modules) 
   tags: util
   become: true
@@ -66,7 +55,7 @@
     filter: ansible_local
 
 - include: oracle.yml
-  when: java_alias is defined and java_alias is sequence and java_alias|join|search("oracle")
+  when: java_versions is defined and java_versions is sequence and java_versions|join|search("oracle")
 
 - include: openjdk.yml
-  when: java_alias is defined and java_alias is sequence and java_alias|join|search("openjdk")
+  when: java_versions is defined and java_versions is sequence and java_versions|join|search("openjdk")
