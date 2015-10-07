@@ -15,9 +15,9 @@ Role Variables
 ### defaults/main.yml
 
 The default should be open-jdk1.7.0
-jdk.version : open-jdk1.7
-jdk.links : /usr/local/java
-jdk.dir : /usr/local/java 
+java_folder: "/usr/lib/jvm"
+java_alias: ""
+java_versions: "{{java_versions_default}}"
 
 ### vars/main.yml
     java_folder: "/usr/lib/jvm"
@@ -29,8 +29,6 @@ jdk.dir : /usr/local/java
 		 - "java-8-oracle"
 
 
-NTR (nothing to report)
-
 Dependencies
 ------------
 
@@ -41,7 +39,8 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers 
       vars:
-        java_versions: oracle-jdk7-installer  			
+        java_versions: "oracle-jdk7-installer"
+        java_alias_default: "java-7-oracle"			
       roles:      
       - {role: ansible-xwiki-jdk}
       
