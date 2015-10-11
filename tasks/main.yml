@@ -46,16 +46,18 @@
     group: 0
     mode: 0755
 
-- name: Install local util facts
+
+- name: Install jdk facts
   tags: util
   become: yes
   register: util_registered_install_local_util_facts
   template:
-    src: facts.j2
-    dest: /etc/ansible/facts.d/util.fact
+    src: jdk-facts.j2
+    dest: /etc/ansible/facts.d/xwiki_jdk.fact
     owner: 0
     group: 0
     mode: 0644
+
 
 - name: Re-read local facts
   tags: util
@@ -63,8 +65,5 @@
   setup:
     filter: ansible_local
 
-- include: oracle.yml
-  when: java_versions is defined and java_versions is sequence and java_versions|join|search("oracle")
-
-- include: openjdk.yml
-  when: java_versions is defined and java_versions is sequence and java_versions|join|search("openjdk")
+- include: mysql-rep.yml
+  when: xwiki_mysql_versions is defined

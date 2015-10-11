@@ -79,4 +79,5 @@ util_package_list_custom: []
 # ansible_os_family == 'Debian'
 util_apt_cache_valid_time: 3600
 
-java_folder: "/usr/lib/jvm"
+java_folder_default: "/usr/lib/jvm"
+java_alias_default: "openjdk-7-jdk"
